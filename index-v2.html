@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张明 - 个人主页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 全局 box-sizing 重置 */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+
+    <!-- 顶部导航栏：flex 水平排列 + 两端对齐 -->
+    <header class="bg-blue-900 text-white">
+        <nav class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+            <span class="text-xl font-bold">张明</span>
+            <span class="text-sm text-blue-200">个人主页</span>
+        </nav>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-8">
+
+        <!-- 板块1：个人介绍区 - flex 布局实现图文并排 -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                <!-- 圆形头像占位 -->
+                <img
+                    src="https://via.placeholder.com/120"
+                   alt="张明的头像"
+                    class="w-28 h-28 rounded-full border-4 border-blue-900 object-cover"
+                >
+                <!-- 文字介绍 -->
+                <div class="text-center md:text-left">
+                    <h1 class="text-2xl font-bold text-blue-900">张明</h1>
+                    <p class="text-gray-500 mt-1">高级运维工程师 / AI 应用探索者</p>
+                    <p class="mt-3 text-gray-700">
+                        拥有多年云原生运维经验，专注于 Kubernetes 集群管理与自动化运维。近年积极探索 AI 辅助开发，致力于用大模型提升团队研发效率，热爱技术分享与开源社区。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 板块2：技能列表区 - flex-wrap 实现标签自动换行 -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-bold text-blue-900 mb-4">专业技能</h2>
+            <ul class="flex flex-wrap gap-3 list-none p-0 m-0">
+                <li class="bg-blue-100 text-blue-900 px-4 py-2 rounded-full text-sm font-medium">Kubernetes</li>
+                <li class="bg-blue-100 text-blue-900 px-4 py-2 rounded-full text-sm font-medium">Python</li>
+                <li class="bg-blue-100 text-blue-900 px-4 py-2 rounded-full text-sm font-medium">AI / LLM</li>
+                <li class="bg-blue-100 text-blue-900 px-4 py-2 rounded-full text-sm font-medium">Docker</li>
+                <li class="bg-blue-100 text-blue-900 px-4 py-2 rounded-full text-sm font-medium">Linux 运维</li>
+                <li class="bg-blue-100 text-blue-900 px-4 py-2 rounded-full text-sm font-medium">CI/CD</li>
+            </ul>
+        </section>
+
+        <!-- 板块3：联系表单 - label 与 input 通过 for/id 绑定 -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-bold text-blue-900 mb-4">联系我</h2>
+            <form action="#" method="POST">
+                <!-- 姓名字段 -->
+                <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="请输入您的姓名"
+                        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                </div>
+                <!-- 邮箱字段 -->
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="请输入您的邮箱"
+                        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                </div>
+                <!-- 留言字段 -->
+                <div class="mb-4">
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">留言</label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="4"
+                        placeholder="请输入您的留言"
+                        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    ></textarea>
+                </div>
+                <!-- 提交按钮 -->
+                <button
+                    type="submit"
+                    class="bg-blue-900 text-white px-6 py-2 rounded-md hover:bg-blue-800 transition-colors"
+                >
+                    发送消息
+                </button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-blue-900 text-white text-center py-4">
+        <p class="text-sm text-blue-200">
+            &copy; 2026 张明 ·
+            <a href="https://github.com/zhangming" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">GitHub</a>
+        </p>
+    </footer>
+
+</body>
+</html>
