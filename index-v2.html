@@ -55,6 +55,20 @@
                 <li class="bg-blue-100 text-blue-900 px-4 py-2 rounded-full text-sm font-medium">Linux 运维</li>
                 <li class="bg-blue-100 text-blue-900 px-4 py-2 rounded-full text-sm font-medium">CI/CD</li>
             </ul>
+            <!-- 隐藏的额外技能（默认不显示） -->
+            <ul id="extra-skills" class="hidden flex flex-wrap gap-3 list-none p-0 m-0 mt-3">
+                <li class="bg-green-100 text-green-900 px-4 py-2 rounded-full text-sm font-medium">Prometheus 监控</li>
+                <li class="bg-green-100 text-green-900 px-4 py-2 rounded-full text-sm font-medium">Terraform</li>
+                <li class="bg-green-100 text-green-900 px-4 py-2 rounded-full text-sm font-medium">Shell 脚本</li>
+                <li class="bg-green-100 text-green-900 px-4 py-2 rounded-full text-sm font-medium">Ansible</li>
+            </ul>
+            <!-- 查看更多按钮 -->
+            <button
+                id="toggle-btn"
+                class="mt-4 bg-blue-900 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-800 transition-colors"
+            >
+                查看更多技能
+            </button>
         </section>
 
         <!-- 板块3：联系表单 - label 与 input 通过 for/id 绑定 -->
@@ -113,6 +127,26 @@
             <a href="https://github.com/zhangming" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">GitHub</a>
         </p>
     </footer>
+
+    <!-- JS 交互：点击按钮切换技能显示/隐藏 -->
+    <script>
+        // 1. 用 querySelector 获取页面元素
+        const toggleBtn = document.querySelector('#toggle-btn')
+        const extraSkills = document.querySelector('#extra-skills')
+
+        // 2. 用 addEventListener 给按钮绑定点击事件
+        toggleBtn.addEventListener('click', () => {
+            // 3. 用 classList.toggle 切换 hidden 类（显示/隐藏）
+            extraSkills.classList.toggle('hidden')
+
+            // 4. 根据当前状态切换按钮文字
+            if (extraSkills.classList.contains('hidden')) {
+                toggleBtn.textContent = '查看更多技能'
+            } else {
+                toggleBtn.textContent = '收起'
+            }
+        })
+    </script>
 
 </body>
 </html>

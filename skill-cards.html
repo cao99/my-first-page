@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>技能卡片墙</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- box-sizing 全局重置 -->
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen py-12 px-4">
+
+  <main class="max-w-5xl mx-auto">
+    <!-- 页面标题 -->
+    <header class="text-center mb-10">
+      <h1 class="text-3xl font-bold text-gray-800">我的技能</h1>
+      <p class="text-gray-500 mt-2">持续学习，持续进步</p>
+    </header>
+
+    <!-- Grid 卡片墙：手机1列 / 平板2列 / PC 3列 -->
+    <section aria-label="技能列表">
+      <ul class="list-none p-0 m-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- 卡片 1：Python -->
+        <li class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+          <span class="text-4xl" aria-hidden="true">🐍</span>
+          <h2 class="text-xl font-semibold text-gray-800 mt-3">Python</h2>
+          <p class="text-gray-600 mt-2">自动化脚本、数据处理与后端开发的主力语言</p>
+        </li>
+
+        <!-- 卡片 2：AI（重点卡片，跨 2 列） -->
+        <li class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 col-span-1 md:col-span-2">
+          <span class="text-4xl" aria-hidden="true">🤖</span>
+          <h2 class="text-xl font-semibold text-gray-800 mt-3">AI</h2>
+          <p class="text-gray-600 mt-2">大模型应用、Prompt 工程与 AI 辅助开发实践</p>
+        </li>
+
+        <!-- 卡片 3：Kubernetes -->
+        <li class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+          <span class="text-4xl" aria-hidden="true">☸️</span>
+          <h2 class="text-xl font-semibold text-gray-800 mt-3">Kubernetes</h2>
+          <p class="text-gray-600 mt-2">容器编排、集群管理与云原生架构落地</p>
+        </li>
+
+        <!-- 卡片 4：运维 -->
+        <li class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+          <span class="text-4xl" aria-hidden="true">🔧</span>
+          <h2 class="text-xl font-semibold text-gray-800 mt-3">运维</h2>
+          <p class="text-gray-600 mt-2">Linux 系统管理、CI/CD 流水线与监控体系建设</p>
+        </li>
+
+        <!-- 卡片 5：安全 -->
+        <li class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+          <span class="text-4xl" aria-hidden="true">🛡️</span>
+          <h2 class="text-xl font-semibold text-gray-800 mt-3">安全</h2>
+          <p class="text-gray-600 mt-2">渗透测试、安全审计与企业安全防护策略</p>
+        </li>
+
+        <!-- 卡片 6：Shell -->
+        <li class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+          <span class="text-4xl" aria-hidden="true">💻</span>
+          <h2 class="text-xl font-semibold text-gray-800 mt-3">Shell</h2>
+          <p class="text-gray-600 mt-2">Bash/Zsh 脚本编写与命令行效率工具链</p>
+        </li>
+
+      </ul>
+    </section>
+  </main>
+
+</body>
+</html>
