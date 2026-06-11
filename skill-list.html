@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>技能清单</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50 flex items-center justify-center">
+  <main class="w-full max-w-md bg-white rounded-lg shadow p-8">
+    <h1 class="text-2xl font-bold mb-4">我的技能清单</h1>
+
+    <!-- 添加技能的输入区域 -->
+    <div class="flex gap-2 mb-4">
+      <input id="new-skill" type="text" placeholder="输入新技能"
+        class="flex-1 rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <button id="add-btn"
+        class="bg-blue-600 text-white rounded px-4 py-2 text-sm font-medium hover:bg-blue-700 transition-colors">
+        添加
+      </button>
+    </div>
+
+    <!-- 技能列表容器（JS 会往这里面动态插入 <li>） -->
+    <ul id="skill-list" class="space-y-2"></ul>
+  </main>
+
+  <script>
+    // 1. 定义技能数据（数组）
+    const skills = ['HTML', 'CSS', 'JavaScript', 'Git', 'DevTools']
+
+    // 2. 找到页面元素
+    const skillList = document.querySelector('#skill-list')
+    const newSkillInput = document.querySelector('#new-skill')
+    const addBtn = document.querySelector('#add-btn')
+
+    // 3. 渲染函数：把数组里的数据变成页面上的 <li> 元素
+    function renderList() {
+      // 先清空列表（防止重复渲染时内容叠加）
+      skillList.innerHTML = ''
+
+      // forEach 遍历数组：对每一项执行箭头函数
+      // skill = 当前这一项的值（如 'HTML'、'CSS'...）
+      skills.forEach((skill) => {
+        // 创建一个 <li> 元素
+        const li = document.createElement('li')
+        // 设置文字内容为当前技能名
+        li.textContent = skill
+        // 加上 Tailwind 样式：背景、圆角、内边距
+        li.className = 'bg-gray-100 rounded px-3 py-2 text-sm'
+        // 把 <li> 插入到 <ul> 里
+        skillList.appendChild(li)
+      })
+    }
+
+    // 4. 页面加载时，先渲染一次初始数据
+    renderList()
+
+    // 5. 点击"添加"按钮时，把新技能加入数组，再重新渲染
+    addBtn.addEventListener('click', () => {
+      const newSkill = newSkillInput.value.trim()
+
+      // 验证：不能为空
+      if (newSkill.length === 0) {
+        return
+      }
+
+      // 把新技能推入数组末尾（push = 往数组尾部加一项）
+      skills.push(newSkill)
+
+      // 清空输入框
+      newSkillInput.value = ''
+
+      // 重新渲染列表（数组变了，页面也要跟着变）
+      renderList()
+    })
+  </script>
+</body>
+</html>
