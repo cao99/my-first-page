@@ -41,5 +41,43 @@
       </button>
     </form>
   </main>
+
+  <script>
+    // 1. 找到表单元素
+    const form = document.querySelector('form')
+    const usernameInput = document.querySelector('#username')
+    const passwordInput = document.querySelector('#password')
+    const confirmInput = document.querySelector('#confirm')
+
+    // 2. 监听表单提交事件
+    form.addEventListener('submit', (e) => {
+      // 阻止默认行为（不让页面刷新）
+      e.preventDefault()
+
+      // 3. 获取用户输入的值，并去掉首尾空格
+      const username = usernameInput.value.trim()
+      const password = passwordInput.value
+      const confirm = confirmInput.value
+
+      // 4. 条件判断：逐项检查
+      if (username.length === 0) {
+        alert('请输入用户名')
+        return  // 停在这里，不往下执行
+      }
+
+      if (password.length < 6) {
+        alert('密码至少需要6位')
+        return
+      }
+
+      if (password !== confirm) {
+        alert('两次密码不一致')
+        return
+      }
+
+      // 5. 全部通过
+      alert('注册成功！欢迎 ' + username)
+    })
+  </script>
 </body>
 </html>
