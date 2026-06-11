@@ -10,29 +10,33 @@
   <main class="w-full max-w-md bg-white rounded-lg shadow p-8">
     <h1 class="text-2xl font-bold text-center mb-6">创建账号</h1>
 
-    <form class="space-y-4">
+    <form id="register-form" class="space-y-4">
       <div>
         <label for="username" class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
         <input id="username" type="text" placeholder="请输入用户名"
           class="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <p id="username-error" class="text-red-500 text-xs mt-1 hidden"></p>
       </div>
 
       <div>
         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
         <input id="email" type="email" placeholder="请输入邮箱"
           class="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <p id="email-error" class="text-red-500 text-xs mt-1 hidden"></p>
       </div>
 
       <div>
         <label for="password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
         <input id="password" type="password" placeholder="请输入密码"
           class="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <p id="password-error" class="text-red-500 text-xs mt-1 hidden"></p>
       </div>
 
       <div>
         <label for="confirm" class="block text-sm font-medium text-gray-700 mb-1">确认密码</label>
         <input id="confirm" type="password" placeholder="请再次输入密码"
           class="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <p id="confirm-error" class="text-red-500 text-xs mt-1 hidden"></p>
       </div>
 
       <button type="submit"
@@ -43,39 +47,114 @@
   </main>
 
   <script>
-    // 1. 找到表单元素
-    const form = document.querySelector('form')
+    // 1. 找到表单和输入框
+    const form = document.querySelector('#register-form')
     const usernameInput = document.querySelector('#username')
+    const emailInput = document.querySelector('#email')
     const passwordInput = document.querySelector('#password')
     const confirmInput = document.querySelector('#confirm')
 
-    // 2. 监听表单提交事件
+    // 2. 找到所有错误提示容器
+    const usernameError = document.querySelector('#username-error')
+    const emailError = document.querySelector('#email-error')
+    const passwordError = document.querySelector('#password-error')
+    const confirmError = document.querySelector('#confirm-error')
+
+    // 3. 显示错误的函数（复用逻辑，避免重复代码）
+    // 参数 errorEl：要显示错误的那个 <p> 元素（如 usernameError、emailError）
+    // 参数 message：要显示的错误文字（如 '请输入用户名'）
+    // 调用示例：showError(usernameError, '请输入用户名')
+    //   → 实际执行：usernameError.textContent = '请输入用户名'（写上文字）
+    //   → 实际执行：usernameError.classList.remove('hidden')（让元素可见）
+    function showError(errorEl, message) {
+      errorEl.textContent = message       // 把错误文字写到 <p> 里
+      errorEl.classList.remove('hidden')  // 移除 hidden 类，让红字显示出来
+    }
+
+    // 4. 清空所有错误提示的函数（textContent='' 擦文字，add('hidden') 隐藏元素，双保险）
+    function clearErrors() {
+      usernameError.textContent = ''
+      usernameError.classList.add('hidden')
+      emailError.textContent = ''
+      emailError.classList.add('hidden')
+      passwordError.textContent = ''
+      passwordError.classList.add('hidden')
+      confirmError.textContent = ''
+      confirmError.classList.add('hidden')
+    }
+
+    // 5. 输入时自动清除对应的错误提示（实时反馈）
+    // 原理：给每个输入框注册 'input' 事件（用户每敲一个字都触发）
+    // 效果：用户开始修改输入内容时，对应的红色错误提示立刻消失，不用等到再次点"注册"
+    // 为什么用 'input' 而不是 'submit'？
+    //   - 'submit' 要点按钮才触发（整体提交）
+    //   - 'input' 每敲一个字就触发（实时反馈，体验更好）
+
+    // 用户名输入框：一旦开始打字 → 清空用户名错误提示并隐藏
+    usernameInput.addEventListener('input', () => {
+      usernameError.textContent = ''       // 擦掉错误文字
+      usernameError.classList.add('hidden') // 隐藏 <p> 元素
+    })
+    // 邮箱输入框：同理
+    emailInput.addEventListener('input', () => {
+      emailError.textContent = ''
+      emailError.classList.add('hidden')
+    })
+    // 密码输入框：同理
+    passwordInput.addEventListener('input', () => {
+      passwordError.textContent = ''
+      passwordError.classList.add('hidden')
+    })
+    // 确认密码输入框：同理
+    confirmInput.addEventListener('input', () => {
+      confirmError.textContent = ''
+      confirmError.classList.add('hidden')
+    })
+
+    // 6. 监听表单提交
+    // form = 上面找到的表单元素，“form是之前定义的常量，指向注册表单 const form = document.querySelector('#register-form')”
+    // addEventListener = 给它注册一个事件监听器（"等着某件事发生"）
+    // 'submit' = 监听的事件类型（用户点注册按钮时触发）
+    // (e) => { ... } = 事件触发后执行的回调函数，e 是事件对象（携带本次事件的信息）
     form.addEventListener('submit', (e) => {
-      // 阻止默认行为（不让页面刷新）
       e.preventDefault()
 
-      // 3. 获取用户输入的值，并去掉首尾空格
+      // 每次提交先清空旧的错误提示
+      clearErrors()
+
+      // 获取输入值
       const username = usernameInput.value.trim()
+      const email = emailInput.value.trim()
       const password = passwordInput.value
       const confirm = confirmInput.value
 
-      // 4. 条件判断：逐项检查
+      // 逐项验证
       if (username.length === 0) {
-        alert('请输入用户名')
-        return  // 停在这里，不往下执行
+        showError(usernameError, '请输入用户名')
+        return
+      }
+
+      if (email.length === 0) {
+        showError(emailError, '请输入邮箱')
+        return
+      }
+
+      if (!email.includes('@')) {
+        showError(emailError, '邮箱格式不正确，需包含 @')
+        return
       }
 
       if (password.length < 6) {
-        alert('密码至少需要6位')
+        showError(passwordError, '密码至少需要6位')
         return
       }
 
       if (password !== confirm) {
-        alert('两次密码不一致')
+        showError(confirmError, '两次密码不一致')
         return
       }
 
-      // 5. 全部通过
+      // 全部通过
       alert('注册成功！欢迎 ' + username)
     })
   </script>
