@@ -26,29 +26,39 @@
 
   <script>
     // 1. 定义技能数据（数组）
-    const skills = ['HTML', 'CSS', 'JavaScript', 'Git', 'DevTools']
+    let skills = ['HTML', 'CSS', 'JavaScript', 'Git', 'DevTools']
 
     // 2. 找到页面元素
     const skillList = document.querySelector('#skill-list')
     const newSkillInput = document.querySelector('#new-skill')
     const addBtn = document.querySelector('#add-btn')
 
-    // 3. 渲染函数：把数组里的数据变成页面上的 <li> 元素
+    // 3. 渲染函数（map 版本）
+    // 核心思路：map 把每项加工成 HTML 字符串 → join 拼成整段 → innerHTML 一次性渲染
     function renderList() {
-      // 先清空列表（防止重复渲染时内容叠加）
-      skillList.innerHTML = ''
+      // skills.map(...) 返回一个字符串数组，每项是一段 <li> 的 HTML
+      // .join('') 把数组拼成一个完整字符串（中间无分隔符）
+      // 赋给 innerHTML 后，浏览器自动解析成真实 DOM 元素显示在页面上
+      skillList.innerHTML = skills.map((skill) => {
+        return `<li class="bg-gray-100 rounded px-3 py-2 text-sm flex items-center justify-between">
+          <span>${skill}</span>
+          <button class="delete-btn text-red-500 hover:text-red-700 font-bold text-lg leading-none" data-skill="${skill}">×</button>
+        </li>`
+      }).join('')
 
-      // forEach 遍历数组：对每一项执行箭头函数
-      // skill = 当前这一项的值（如 'HTML'、'CSS'...）
-      skills.forEach((skill) => {
-        // 创建一个 <li> 元素
-        const li = document.createElement('li')
-        // 设置文字内容为当前技能名
-        li.textContent = skill
-        // 加上 Tailwind 样式：背景、圆角、内边距
-        li.className = 'bg-gray-100 rounded px-3 py-2 text-sm'
-        // 把 <li> 插入到 <ul> 里
-        skillList.appendChild(li)
+      // 删除按钮事件绑定
+      // 因为 innerHTML 重写后，之前的事件监听全部失效（旧元素被销毁了）
+      // 所以每次渲染完，需要重�给所有删除按钮绑定点击事件
+      // querySelectorAll = 找到所有匹配的元素（返回一个列表）
+      // .forEach = 对列表里每个按钮依次执行
+      document.querySelectorAll('.delete-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          // btn.dataset.skill 读取按钮上 data-skill="xxx" 存的值
+          // 知道了要删哪个技能，就用 filter 过滤掉它
+          const skillToDelete = btn.dataset.skill
+          skills = skills.filter((s) => s !== skillToDelete)
+          renderList()  // 数据变了，重新渲染
+        })
       })
     }
 
@@ -59,18 +69,12 @@
     addBtn.addEventListener('click', () => {
       const newSkill = newSkillInput.value.trim()
 
-      // 验证：不能为空
       if (newSkill.length === 0) {
         return
       }
 
-      // 把新技能推入数组末尾（push = 往数组尾部加一项）
       skills.push(newSkill)
-
-      // 清空输入框
       newSkillInput.value = ''
-
-      // 重新渲染列表（数组变了，页面也要跟着变）
       renderList()
     })
   </script>
